@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Node Firebase API
+  version: 1.0.0
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        collection:
+          type: string
+        documentId:
+          type: string
+        documentValue:
+          type: object
+  parameters:
+    collection:
+      name: collection
+      in: query
+      required: true
+      schema:
+        type: string
+    documentId:
+      name: documentId
+      in: query
+      required: true
+      schema:
+        type: string
+paths:
+  /read-doc:
+    get:
+      description: Reads a document
+      parameters:
+        - $ref: "#/components/parameters/collection"
+        - $ref: "#/components/parameters/documentId"
+      responses:
+        "200":
+          description: success
+        "500":
+          description: failure
+  /write-doc:
+    post:
+      summary: Write a document
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Document"
+      responses:
+        "200":
+          description: success
+        "500":
+          description: failure
