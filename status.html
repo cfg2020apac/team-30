@@ -12,10 +12,13 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script>
         var data;
+        var accepted = 0;
+        var decline = 0;
+        var no_response = 0;
 
         function httpGet() {
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", "https://test-project-e6786.web.app/teststatus", false); // false for synchronous request
+            xmlHttp.open("GET", "https://test-project-e6786.web.app/recommendationstatus/1", false); // false for synchronous request
             xmlHttp.send(null);
             data = JSON.parse(xmlHttp.responseText);
         }
@@ -36,12 +39,25 @@
                 row.append(email);
                 row.append(status);
                 $("#table").append(row);
+
+                if (data[i].status == "No response") {
+                    ++no_response;
+                } else if (data[i].status == "Accepted") {
+                    ++accepted;
+                } else {
+                    ++decline;
+                }
             }
+        }
+
+        function calculate() {
+            $("#stat").append(accepted.toString() + " Accepted, " + decline.toString() + " Decline, " + no_response.toString() + " No response)");
         }
 
         $(document).ready(function() {
             httpGet();
             createTable();
+            calculate();
         })
 
     </script>
@@ -60,15 +76,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"></a>
+                <a class="navbar-brand" href="#">HandsOn Connect</a>
             </div>
     
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#"><img src="Images\handsonicon.png" width="20" height="20"> Hands On HK
-                            <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a></li>
+                    <li class="active"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i> Calendar <span class="sr-only">(current)</span></a></li>
+                    <li><a href="event.html"><i class="fa fa-cog" aria-hidden="true"></i> Matching</a></li>
+                    <li><a href="status.html"><i class="fa fa-user" aria-hidden="true"></i> Status</a></li>
+                    <li><a href="reports.html"><i class="fa fa-question-circle" aria-hidden="true"></i>Reports</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -78,11 +95,14 @@
     <div class="container" style="padding-top: 80px;">
         <div class="row" style="font-size: 20px">
             <button type="button" class="btn btn-success btn-lg" onclick="window.location.href = 'event.html'">
-                <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
         </div>
 
         <div class="row">
-            <h2 class="sub-header">Volunteer Responses</h2>
+            <h1 class="display-3">Youth Opportunity: Help at animal shelter in Yuen Long</h1>
+            <h2>Date: Sat, 17 Oct 2020&nbsp&nbsp&nbspTime: 12:00 to 16:00</h2>
+            <br>
+            <h2 id="stat" class="sub-header">Volunteer Responses (Total: </h2>
             <table class="table table-striped" style="font-size: 20px; padding-left: 5px">
                 <thead>
                     <tr>
