@@ -12,10 +12,13 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script>
         var data;
+        var accepted = 0;
+        var decline = 0;
+        var no_response = 0;
 
         function httpGet() {
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", "https://test-project-e6786.web.app/teststatus", false); // false for synchronous request
+            xmlHttp.open("GET", "https://test-project-e6786.web.app/recommendationstatus/1", false); // false for synchronous request
             xmlHttp.send(null);
             data = JSON.parse(xmlHttp.responseText);
         }
@@ -36,12 +39,25 @@
                 row.append(email);
                 row.append(status);
                 $("#table").append(row);
+
+                if (data[i].status == "No response") {
+                    ++no_response;
+                } else if (data[i].status == "Accepted") {
+                    ++accepted;
+                } else {
+                    ++decline;
+                }
             }
+        }
+
+        function calculate() {
+            $("#stat").append(accepted.toString() + " Accepted, " + decline.toString() + " Decline, " + no_response.toString() + " No response)");
         }
 
         $(document).ready(function() {
             httpGet();
             createTable();
+            calculate();
         })
 
     </script>
@@ -78,11 +94,14 @@
     <div class="container" style="padding-top: 80px;">
         <div class="row" style="font-size: 20px">
             <button type="button" class="btn btn-success btn-lg" onclick="window.location.href = 'event.html'">
-                <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
         </div>
 
         <div class="row">
-            <h2 class="sub-header">Volunteer Responses</h2>
+            <h1 class="display-3">Youth Opportunity: Help at animal shelter in Yuen Long</h1>
+            <h2>Date: Sat, 17 Oct 2020&nbsp&nbsp&nbspTime: 12:00 to 16:00</h2>
+            <br>
+            <h2 id="stat" class="sub-header">Volunteer Responses (Total: </h2>
             <table class="table table-striped" style="font-size: 20px; padding-left: 5px">
                 <thead>
                     <tr>
