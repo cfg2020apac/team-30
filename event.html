@@ -24,7 +24,6 @@
         httpGet();
 
         function createTable() {
-            var table = document.getElementById("volunteer_table");
             $("#recom_text").append(data.length + ")");
             for (var i = 0; i < data.length; i++) {
                 var row = document.createElement("tr");
@@ -37,7 +36,7 @@
                 row.append(no);
                 row.append(name);
                 row.append(email);
-                table.append(row);
+                $("#table").append(row);
                 emails.push(data[i].name);
             }
         }
@@ -49,7 +48,7 @@
             setTimeout(function() {
                 $("#loader").css("display", "none");
                 $("#recom_text").css("display", "");
-                $("#volunteer_table").css("display", "");
+                $("#table").css("display", "");
                 $("#send_btn").css("display", "");
             }, 2000);
         }
@@ -135,7 +134,7 @@
         <div id="loader" class="loader" style="display: none;"></div>
         
         <h1 id="recom_text" class="display-3" style="display: none">Recommended Volunteers (</h1>
-        <table id="volunteer_table" class="table" style="display: none; font-size: 20px; padding-left: 5px;">
+        <table id="table" class="table" style="display: none; font-size: 20px; padding-left: 5px;">
             <thead>
                 <tr>
                     <th>No.</th>
