@@ -5,175 +5,101 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-	<title>BackTrack - Home</title>
+	<title>Responses</title>
 	<link rel="stylesheet" href="css/adminstyle.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script>
+        var data;
 
+        function httpGet() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "https://test-project-e6786.web.app/teststatus", false); // false for synchronous request
+            xmlHttp.send(null);
+            data = JSON.parse(xmlHttp.responseText);
+            console.log(data)
+        }
+
+        function createTable() {
+            httpGet();
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement("tr");
+                var no = document.createElement("td");
+                no.append(i + 1);
+                var name = document.createElement("td");
+                name.append(data[i].name);
+                var email = document.createElement("td");
+                email.append(data[i].email);
+                var status = document.createElement("td");
+                status.append(data[i].status);
+                row.append(no);
+                row.append(name);
+                row.append(email);
+                row.append(status);
+                $("#table").append(row);
+            }
+        }
+
+        createTable();
+
+    </script>
 </head>
 
 <body>
-<!--    Navbar starts here-->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"></a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i> Calendar <span class="sr-only">(current)</span></a></li>
-            <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-            <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
-            <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>Help</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i> Add Users</a></li>
-            <li><a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> Add Categories</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-<!--    Navbar ends here-->
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li class="active"><a href="#">Reports</a></li>
-                    <li><a href="#">Status</a></li>
-                    <li><a href="#">Monitor Event</a></li>
-                    <li><a href="#">Help</a></li>
+    <!--    Navbar starts here-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="font-size: 15px; font-weight: bold;">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"></a>
+            </div>
+    
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><img src="Images\handsonicon.png" width="20" height="20"> Hands On HK
+                            <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a></li>
                 </ul>
-            </div>
-<!--                <ul class="nav nav-sidebar">-->
-<!--                    <li class="active"><a href="#">Reports</a></li>-->
-<!--                    <li><a href="#">Revenue</a></li>-->
-<!--                    <li><a href="#">Countries</a></li>-->
-<!--                    <li><a href="#">Spammers</a></li>-->
-<!--                </ul>-->
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!--    Navbar ends here-->
 
-<!--            <div class="col-sm-9 col-md-10 main">-->
-<!--                <h1 class="page-header"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>-->
-<!--                <div class="row placeholders">-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <br>
-            <br>
-            <br>
-                <h2 class="sub-header">Volunteer Status</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Ranking</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>john</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="container" style="padding-top: 80px;">
+        <div class="row" style="font-size: 20px">
+            <button type="button" class="btn btn-success btn-lg" onclick="window.location.href = 'event.html'">
+                <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
         </div>
+
+        <div class="row">
+            <h2 class="sub-header">Volunteer Responses</h2>
+            <table class="table table-striped" style="font-size: 20px; padding-left: 5px">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody id="table"></tbody>
+            </table>
+        </div>
+    </div>
     
     <footer>
-<!--        &lt;!&ndash; JQuery &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--        &lt;!&ndash; Bootstrap tooltips &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>-->
-<!--        &lt;!&ndash; Bootstrap core JavaScript &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
-<!--        &lt;!&ndash; MDB core JavaScript &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>-->
-        <p class="pull-right"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Move to Top</p>
-        <p>&copy; Coding Monkeys, 2020</p>
+        <div class="container">
+            <p>&copy; Coding Monkeys, 2020</p>
+        </div>
     </footer>
     
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
