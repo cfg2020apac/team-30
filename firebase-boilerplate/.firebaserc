@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "test-project-e6786"
+  },
+  "targets": {
+    "test-project-e6786": {
+      "hosting": {
+        "frontend": [
+          "handsonhk"
+        ]
+      }
+    }
   }
 }
