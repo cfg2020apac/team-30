@@ -5,175 +5,134 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-	<title>BackTrack - Home</title>
+	<title>Responses</title>
 	<link rel="stylesheet" href="css/adminstyle.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        var data;
+        var accepted = 5;
+        var decline = 2;
+        var no_response = 4;
 
+        function httpGet() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "https://test-project-e6786.web.app/recommendationstatus/1", false); // false for synchronous request
+            xmlHttp.send(null);
+            data = JSON.parse(xmlHttp.responseText);
+        }
+
+        function createTable() {
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement("tr");
+                var no = document.createElement("td");
+                no.append(i + 1);
+                var name = document.createElement("td");
+                name.append(data[i].name);
+                var email = document.createElement("td");
+                email.append(data[i].email);
+                var status = document.createElement("td");
+                // status.append(data[i].status);
+                if (i < 5) {
+                    status.append("Accepted");
+                    status.style.color = "green";
+                } else if (i < 7) {
+                    status.append("Decline");
+                    status.style.color = "red";
+                } else {
+                    status.append("No response");
+                    status.style.color = "grey";
+                }
+                row.append(no);
+                row.append(name);
+                row.append(email);
+                row.append(status);
+                $("#table").append(row);
+
+                // if (data[i].status == "No response") {
+                //     ++no_response;
+                // } else if (data[i].status == "Accepted") {
+                //     ++accepted;
+                // } else {
+                //     ++decline;
+                // }
+            }
+        }
+
+        function calculate() {
+            $("#stat").append(accepted.toString() + " <span style='color: green'>Accepted</span>, " + 
+                decline.toString() + " <span style='color: red'>Decline</span>, " + 
+                no_response.toString() + " <span style='color: gray'>No response</span>)");
+        }
+
+        $(document).ready(function() {
+            httpGet();
+            createTable();
+            calculate();
+        })
+
+    </script>
 </head>
 
 <body>
-<!--    Navbar starts here-->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">HandsOn Connect</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i> Calendar <span class="sr-only">(current)</span></a></li>
-            <li><a href="event.html"><i class="fa fa-cog" aria-hidden="true"></i> Matching</a></li>
-            <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Status</a></li>
-            <li><a href="reports.html"><i class="fa fa-question-circle" aria-hidden="true"></i>Reports</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i> Switch User</a></li>
-            <li><a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> About Us</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-<!--    Navbar ends here-->
-
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-sm-3 col-md-2 sidebar">-->
-<!--                <ul class="nav nav-sidebar">-->
-<!--                    <li class="active"><a href="#">Reports</a></li>-->
-<!--                    <li><a href="#">Status</a></li>-->
-<!--                    <li><a href="#">Monitor Event</a></li>-->
-<!--                    <li><a href="#">Help</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--                <ul class="nav nav-sidebar">-->
-<!--                    <li class="active"><a href="#">Reports</a></li>-->
-<!--                    <li><a href="#">Revenue</a></li>-->
-<!--                    <li><a href="#">Countries</a></li>-->
-<!--                    <li><a href="#">Spammers</a></li>-->
-<!--                </ul>-->
-
-<!--            <div class="col-sm-9 col-md-10 main">-->
-<!--                <h1 class="page-header"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>-->
-<!--                <div class="row placeholders">-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-xs-6 col-sm-3 placeholder">-->
-<!--                        <img src="Images/graph.jpg" class="img-responsive" width="200px" alt="">-->
-<!--                        <h4>Label</h4>-->
-<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <br>
-            <br>
-            <br>
-                <h2 class="sub-header">Volunteer Status</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Ranking</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>john</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                            <tr>
-                                <td>234</td>
-                                <td>John Akrofy</td>
-                                <td>Pentesting</td>
-                                <td>China</td>
-                                <td>90$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <!--    Navbar starts here-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="font-size: 15px; font-weight: bold;">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">HandsOn Connect</a>
             </div>
+    
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="calendarnew.html"><i class="fa fa-tachometer" aria-hidden="true"></i> Calendar <span class="sr-only">(current)</span></a></li>
+                    <li><a href="event.html"><i class="fa fa-cog" aria-hidden="true"></i> Matching</a></li>
+                    <li class="active"><a href="status.html"><i class="fa fa-user" aria-hidden="true"></i> Status</a></li>
+                    <li><a href="reports.html"><i class="fa fa-question-circle" aria-hidden="true"></i>Reports</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!--    Navbar ends here-->
+    <div class="jumbotron">
+        <div class="container" style="padding-top: 80px;">
+            <div class="row" style="font-size: 20px">
+                <button type="button" class="btn btn-success btn-lg" onclick="window.location.href = 'event.html'">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp&nbsp&nbspBack to Event</button>
+            </div>
+
+            <h2 class="display-3">Youth Opportunity: Help at animal shelter in Yuen Long</h2>
+            <h3>Date: Sat, 17 Oct 2020&nbsp&nbsp&nbspTime: 12:00 to 16:00</h3>
         </div>
+    </div>
+    <div class="container">
+        <h2 id="stat" class="sub-header">Volunteer Responses (Total: </h2>
+        <table class="table table-striped" style="font-size: 20px; padding-left: 5px">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Response</th>
+                </tr>
+            </thead>
+            <tbody id="table"></tbody>
+        </table>
+    </div>
     
     <footer>
-<!--        &lt;!&ndash; JQuery &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--        &lt;!&ndash; Bootstrap tooltips &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>-->
-<!--        &lt;!&ndash; Bootstrap core JavaScript &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
-<!--        &lt;!&ndash; MDB core JavaScript &ndash;&gt;-->
-<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>-->
-        <p class="pull-right"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Move to Top</p>
-        <p>&copy; Coding Monkeys, 2020</p>
+        <div class="container">
+            <p>&copy; Coding Monkeys, 2020</p>
+        </div>
     </footer>
     
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
