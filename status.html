@@ -18,11 +18,9 @@
             xmlHttp.open("GET", "https://test-project-e6786.web.app/teststatus", false); // false for synchronous request
             xmlHttp.send(null);
             data = JSON.parse(xmlHttp.responseText);
-            console.log(data)
         }
 
         function createTable() {
-            httpGet();
             for (var i = 0; i < data.length; i++) {
                 var row = document.createElement("tr");
                 var no = document.createElement("td");
@@ -41,7 +39,10 @@
             }
         }
 
-        createTable();
+        $(document).ready(function() {
+            httpGet();
+            createTable();
+        })
 
     </script>
 </head>
