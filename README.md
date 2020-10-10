@@ -1,4 +1,4 @@
-# team-30
+# Team-30
 
 **Website Link**
 
